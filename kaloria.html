@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Kalória számoló</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 40px;
+            background-color: #f2f2f2;
+            background-image: url(weight2.png);
+            background-repeat: repeat;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 40px;
+        }
+
+        p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"],
+        select {
+            padding: 10px 20px;
+            font-size: 18px;
+            margin-bottom: 20px;
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #eredmény {
+            font-size: 18px;
+            margin-top: 40px;
+            color: #333;
+        }
+    </style>
+
+    <script>
+        function számol() {
+            var nem = document.getElementById("nem").value;
+            var kor = parseInt(document.getElementById("kor").value);
+            var testsúly = parseInt(document.getElementById("testsúly").value);
+            var magasság = parseInt(document.getElementById("magasság").value);
+            var intenzitás = document.getElementById("intenzitás").value;
+            var perc = parseInt(document.getElementById("perc").value);
+
+            var BMR;
+            if (nem == "férfi") {
+                BMR = 66 + 13.7 * testsúly + 5 * magasság - 6.8 * kor;
+            } else {
+                BMR = 655 + 9.6 * testsúly + 1.8 * magasság - 4.7 * kor;
+            }
+
+            var égett;
+            if (intenzitás == "könnyű") {
+                égett = BMR * (perc / 60) * 0.0675;
+            } else if (intenzitás == "közepes") {
+                égett = BMR * (perc / 60) * 0.10;
+            } else {
+                égett = BMR * (perc / 60) * 0.175;
+            }
+
+            if (égett) {
+                document.getElementById("eredmény").innerHTML =
+                    "Az ön által elégetett kalória: " +
+                    Math.round(égett) +
+                    " kalória";
+            } else {
+                document.getElementById("eredmény").innerHTML =
+                    "Adja meg a megfelelő adatokat";
+            }
+        }
+    </script>
+
+</head>
+
+<body>
+    <p>
+        Adja meg a nemét: <select id="nem">
+            <option value="férfi">férfi</option>
+            <option value="nő">nő</option>
+        </select>
+    </p>
+    <p>
+        Adja meg a korát: <input type="text" id="kor" /> év
+    </p>
+    <p>
+        Adja meg a testsúlyát: <input type="text" id="testsúly" /> kg
+    </p>
+    <p>
+        Adja meg a magasságát: <input type="text" id="magasság" /> cm
+    </p>
+    <p>
+        Adja meg az intenzitást: <select id="intenzitás">
+            <option value="könnyű">könnyű</option>
+            <option value="közepes">közepes</option>
+            <option value="erős">erős</option>
+        </select>
+    </p>
+    <p>
+        Adja meg, mennyi ideig sportolt: <input type="text" id="perc" /> perc
+    </p>
+    <button onclick="számol()">Számol</button>
+    <p id="eredmény"></p>
+</body>
+
+</html>
